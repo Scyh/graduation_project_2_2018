@@ -1,0 +1,26 @@
+/* 1 */
+{
+    "_id" : ObjectId("5acb1609b451b020dc2471c3"),
+    "userProfile" : "",
+    "username" : "zhang",
+    "password" : "123456",
+    "__v" : 0
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5acb19a299d17a22a829a4b2"),
+    "userProfile" : "",
+    "username" : "shen",
+    "password" : "123456",
+    "__v" : 0
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("5acb1c363afd7e21fc9019b9"),
+    "userProfile" : "",
+    "username" : "zhang1",
+    "password" : "zhang1",
+    "__v" : 0
+}
