@@ -23,7 +23,7 @@ var schema_News = new mongoose.Schema({
 	// 文章分类: news(新闻) 、 hotNews(热门资讯)
 	news_category: {
 		type: String,
-		default: 'hotNews'
+		default: 'news'
 	}
 })
 

@@ -172,7 +172,7 @@ app.post('/apis/addNewCanteenComment', (req, res, next) => {
   })
 
   newCanteenComment.save().then(data =>{
-    console.log(data)
+    // console.log(data)
     res.send({
       status: 'success'
     })
@@ -355,18 +355,44 @@ app.get('/apis/getLatestNews', (req, res, next) => {
 
 // 查找指定新闻
 app.get('/apis/getOneNew', (req, res, next) => {
-  News.findById(req.query.new_id).then(data => {
+  News.findById(req.query.news_id).then(data => {
     res.json(data)
   }).catch(err => {
     console.log(err)
   })
 })
 
-//  测试
-app.get('/test', (req, res, next) => {
-  
+
+/*
+*管
+*理
+*员
+*接
+*口
+*/
+
+// 获取所以用户信息
+app.get('/apis/admin/getUserInfo', function(req, res, next) {
+  User.adminFetchSome(req.query.page)
+    .then(users => {
+      User.count({})
+        .then(count => {
+          res.send({
+            count: count,
+            users: users
+          })
+        })
+    })
 })
 
+app.get('/apis/admin/getCanteen', function(req, res, next) {
+  Canteen.find().then(data=> {
+    console.log(data)
+    res.json(data)
+  }).catch(er => {
+    console.log(err);
+  })
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

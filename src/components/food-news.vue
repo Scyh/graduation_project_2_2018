@@ -2,6 +2,7 @@
 	<div class="food-news">
 		<div class="container">
 			<div class="row">
+				<!-- banner -->
 				<div class="col-lg-5  col-md-5  col-sm-5 banner">
 					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 					<!-- Indicators -->
@@ -37,11 +38,15 @@
 						</a>
 					</div>
 				</div>
+
+				<!-- food-news -->
 				<div class="col-lg-7  col-md-7  col-sm-7 news">
 					<template v-for="latestNew in news">
 						<div class="news-item">
-							<p>{{ latestNew.news_title }}</p>
-							<span class="news-item-time pull-right">{{ latestNew.news_publish_time }}</span>	
+							<p>
+								<router-link :to="'/news/' + latestNew._id">{{ latestNew.news_title }}</router-link>
+							</p>
+							<span class="news-item-time pull-right">{{ latestNew.news_publish_time | getDate }}</span>	
 						</div>
 					</template>
 				</div>

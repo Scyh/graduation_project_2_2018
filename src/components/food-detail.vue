@@ -65,7 +65,9 @@
 			</template>
 			<template v-else>
 				<div class="row">
-					<p>尚未登录, 登陆后可评论哦~</p>
+					<div class="col-lg-12 col-md-12 noLogin">
+						<p><span data-toggle="modal" data-target="#loginModal">登陆</span>后可评论哦~</p>
+					</div>
 				</div>
 			</template>
 		</div>
@@ -347,5 +349,11 @@
 		position: absolute;
 		right: 24px;
 		color: #ccc;
+	}
+	.noLogin p {
+		margin-left: 25px;
+	}
+	.noLogin span {
+		color: #1F7CFF;
 	}
 </style>

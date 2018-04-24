@@ -9,7 +9,7 @@
 								<th>美食</th>
 								<th>预览</th>
 								<th class="showRanging" @click="changeRanking">评分<span class="glyphicon glyphicon-arrow-up"></span></th>
-								<th>人均</th>
+								<th>人均￥</th>
 								<th>所属食堂</th>
 							</tr>
 						</thead> 

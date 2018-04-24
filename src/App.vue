@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <cus-nav></cus-nav>
+    <cus-nav v-if="!isAdmin"></cus-nav>
     <cus-main></cus-main>
   </div>
 </template>
@@ -9,12 +9,18 @@
   
 import cusNav from './components/nav.vue';
 import cusMain from './components/main.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     cusNav,
     cusMain
+  },
+  computed: {
+    ...mapGetters([
+        'isAdmin'
+    ]),
   }
 }
 </script>

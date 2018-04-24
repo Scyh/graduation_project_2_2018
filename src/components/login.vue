@@ -1,6 +1,6 @@
 <template>
 	<!-- LogIn Modal -->
-	<div class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal fade" tabindex="-1" role="dialog" id="login">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -45,7 +45,7 @@
 	    },
 		methods: {
 			 
-			      // 验证登录
+			// 验证登录
 			confirmLogin: function() {
 				let that = this;
 				let username = $(".username").val();
