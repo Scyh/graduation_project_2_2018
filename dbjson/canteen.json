@@ -4,8 +4,15 @@
     "name" : "ren",
     "location" : "地址xxxxxxxxx",
     "canteen_id" : 1001,
-    "overall_score" : 4.15,
-    "service_score" : 4.2,
+    "canteen_imgs" : [ 
+        "http://localhost:3001/1001admin_1511145781208_2.jpg", 
+        "http://localhost:3001/canteen1.jpg", 
+        "http://localhost:3001/canteen2.jpg", 
+        "http://localhost:3001/canteen3.jpg", 
+        "http://localhost:3001/canteen4.jpg"
+    ],
+    "overall_score" : 4.1,
+    "service_score" : 4.1,
     "environmental_score" : 4.1
 }
 
@@ -14,6 +21,12 @@
     "_id" : ObjectId("5acb2a8b62ff5acef795a3ee"),
     "name" : "ai",
     "location" : "地址xxxxxxxxx",
+    "canteen_imgs" : [ 
+        "http://localhost:3001/canteen5.jpg", 
+        "http://localhost:3001/canteen6.jpg", 
+        "http://localhost:3001/canteen7.jpg", 
+        "http://localhost:3001/canteen8.jpg"
+    ],
     "canteen_id" : 1002,
     "overall_score" : 3.9,
     "service_score" : 3.6,
@@ -25,6 +38,12 @@
     "_id" : ObjectId("5acb2b9a62ff5acef795a456"),
     "name" : "yi",
     "location" : "地址xxxxxxxxx",
+    "canteen_imgs" : [ 
+        "http://localhost:3001/canteen9.jpg", 
+        "http://localhost:3001/canteen10.jpg", 
+        "http://localhost:3001/canteen11.jpg", 
+        "http://localhost:3001/canteen12.jpg"
+    ],
     "canteen_id" : 1003,
     "overall_score" : 4.4,
     "service_score" : 4.5,
@@ -36,6 +55,12 @@
     "_id" : ObjectId("5acb2ba962ff5acef795a45d"),
     "name" : "ping",
     "location" : "地址xxxxxxxxx",
+    "canteen_imgs" : [ 
+        "http://localhost:3001/canteen13.jpg", 
+        "http://localhost:3001/canteen14.jpg", 
+        "http://localhost:3001/canteen15.jpg", 
+        "http://localhost:3001/canteen16.jpg"
+    ],
     "canteen_id" : 1004,
     "overall_score" : 4,
     "service_score" : 3.9,
