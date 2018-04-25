@@ -14,12 +14,13 @@
 						<dt @click="fn($event)" title="userManage" id="userManage"><span class="glyphicon glyphicon-user"></span>用户管理</dt>
 					</dl>
 					<dl>
-						<dt @click="fn($event)" title="canteenManage" id="canteenManage"><span class="glyphicon glyphicon-list"></span>食堂管理</dt>
-						<dd @click="fn($event)" title="canteenManage">食堂评论管理</dd>
+						<dt @click="fn($event),translateIndex($event)" data-index='0' title="canteenManage" id="canteenManage"><span class="glyphicon glyphicon-list"></span>食堂管理</dt>
+						<dd @click="fn($event),translateIndex($event)" data-index='1' title="canteenManage">更新食堂图片</dd>
+						<dd @click="fn($event),translateIndex($event)" data-index='2' title="canteenManage">食堂评论管理</dd>
 					</dl>
 					<dl>
-						<dt @click="fn($event)" title="foodManage" id="foodManage"><span class="glyphicon glyphicon-list"></span>食堂菜品管理</dt>
-						<dd @click="fn($event)" title="foodManage">食堂菜品添加</dd>
+						<dt @click="fn($event),translateIndex($event)" data-index='0' title="foodManage" id="foodManage"><span class="glyphicon glyphicon-list"></span>食堂菜品管理</dt>
+						<dd @click="fn($event),translateIndex($event)" data-index='1' title="foodManage">食堂菜品添加</dd>
 						<!-- <dd @click="fn($event)" title="questionManage"></dd> -->
 					</dl>
 					<dl>
@@ -41,6 +42,7 @@
 				<div class="menu-right-body">
 					<admin-user-manage v-if="currentContent == 'userManage'"></admin-user-manage>
 					<admin-canteen-manage v-if="currentContent == 'canteenManage'"></admin-canteen-manage>
+					<admin-food-manage v-if="currentContent == 'foodManage'"></admin-food-manage>
 				</div>
 			</div>
 			</div>
@@ -48,9 +50,11 @@
 	</div>
 </template>
 <script>
-	import adminUserManage from './admin-user-manage.vue'
-	import adminCanteenManage from './admin-canteen-manage.vue'
-	
+	import adminUserManage from './admin_user_manage.vue'
+	import adminCanteenManage from './admin_canteen_manage.vue'
+	import adminFoodManage from './admin_food_manage.vue'
+	import bus from '../bus.js'
+
 	export default {
 		data() {
 			return {
@@ -81,10 +85,15 @@
 				} else { return false }
 					this.currentContent = $(event.target).attr('title');
 			},
+
+			translateIndex(ev) {
+				bus.$emit('switchIndex', $(ev.target).data('index'))
+			}
 		},
 		components: {
 			adminUserManage,
-			adminCanteenManage
+			adminCanteenManage,
+			adminFoodManage,
 		}
 	}
 </script>

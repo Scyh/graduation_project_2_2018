@@ -1,6 +1,6 @@
 <template>
 	<div id="upload">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-2">
 					<div class="upload-wrap" title="上传图片">
@@ -49,7 +49,8 @@
 							// var img = `<img src="${reader.result}" />`;
 							var img = new Image();
 							img.src = reader.result;
-							img.name = sessionStorage.username + '_' + files[i].lastModified + '_' + files[i].name;
+							// img.name = sessionStorage.username + '_' + files[i].lastModified + '_' + files[i].name;
+							sessionStorage.username !== 'undefined' ? img.name =  sessionStorage.username + '_' + files[i].lastModified + '_' + files[i].name : img.name = 'admin'+ '_' + files[i].lastModified + '_' + files[i].name ;
 							preViewItem.appendChild(img)
 							var span = document.createElement('span');
 							$(span).addClass('del-img glyphicon glyphicon-remove');

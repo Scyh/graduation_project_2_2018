@@ -5,6 +5,29 @@
 				<div class="canteen_comments">
 					<div class="canteen_comments_head">
 						<h3>当前正在浏览: {{ Canteen | switchCanteen }}食堂的评论区</h3>
+						<div>
+							<span>总体评分：</span><star-count :isCanteen="true" :width="canteen.overall_score / 5 * 85.56"></star-count>&nbsp;&nbsp;&nbsp;{{ canteen.overall_score }}分
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>服务评分：</span><star-count :isCanteen="true" :width="canteen.service_score / 5 * 85.56"></star-count>&nbsp;&nbsp;&nbsp;{{ canteen.service_score }}分
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<span>卫生评分：</span><star-count :isCanteen="true" :width="canteen.environmental_score / 5 * 85.56"></star-count>&nbsp;&nbsp;&nbsp;{{ canteen.environmental_score }}分
+						</div>
+						<div class="canteen-imgs">
+							<div class="imgs-box">
+								<div class="box-head">
+									<span @click="close"><img src="../assets/close.png" alt="关闭"></span>
+								</div>
+								<div class="box-body">
+									<span @click="changeImg('prev', $event)"></span>		
+									<span @click="changeImg('next', $event)"></span>
+								</div>
+							</div>
+							<div class="box-foot">
+								<template v-for="item in canteen.canteen_imgs">
+									<img class="canteen-imgs-item" :src="item" @click="view">
+								</template>
+							</div>
+						</div>
 					</div>
 					<div class="canteen_comments_body">
 						<template v-for="canteen_comment in canteen_comments">
@@ -15,7 +38,7 @@
 									</div>
 								</div>
 								<div class="col-lg-10 comment-content">
-									<span class="pull-right comment-time">{{ canteen_comment.comment_time }}</span>
+									<span class="pull-right comment-time">{{ canteen_comment.comment_time | getDate}}</span>
 									<span>服务打分：</span><star-count :width="canteen_comment.comment_service_score / 5 * 85.56"></star-count>
 									<br>
 									<span>卫生打分：</span><star-count :width="canteen_comment.comment_environmental_score / 5 * 85.56"></star-count>
@@ -23,47 +46,6 @@
 								</div>
 							</div>
 						</template>
-
-						<!-- <div class="row comment-item">
-							<div class="col-lg-1">
-								<div class="user-profile">
-									<img src="../assets/images/user.jpg">
-								</div>
-							</div>
-							<div class="col-lg-11 comment-content">
-								<h4 class="user-name">用户名</h4>
-								<p class="comment-time">2018年2月26日</p>
-								<div class="star-count">
-									<ul class="bg-star">
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-									</ul>
-									<ul class="real-star">
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-										<li><i class="glyphicon glyphicon-star"></i></li>
-									</ul>
-								</div>
-								<p class="comment-text">
-									猪蹄好好吃(⊙o⊙)哦！猪蹄好好吃(⊙o⊙)哦
-								</p>
-								<p class="imgs">
-									<ul>
-										<li @click="view"><img src="../assets/images/comment_1.jpg"></li>
-										<li @click="view"><img src="../assets/images/comment_2.jpg"></li>
-										<li @click="view"><img src="../assets/images/comment_3.jpg"></li>
-									</ul>
-								</p>
-								<div class="imgs-view">
-										<img class="img-responsive" src="">
-								</div>
-							</div>
-						</div> -->
 					</div>
 					<div class="canteen_comment_footer">
 						<div class="row">
@@ -86,10 +68,12 @@
 <script>
 	import starCount from './star_count.vue'
 	import newCanteenComment from './addNewCanteenComment.vue'
+	import bus from '../bus.js'
 
 	export default {
 		data() {
 			return {
+				canteen: {},
 				canteen_comments: [],
 				page: 1,
 				hasMore: true,
@@ -106,11 +90,37 @@
 			}
 		},
 		mounted() {
-			console.log(this.Canteen)
-			this.initCanteenComments2(this.Canteen, this.page);
+			this.initCanteen(this.Canteen).then(() => {
+				this.initCanteenComments2(this.Canteen, this.page);	
+			});
+
+			bus.$on('init', () => {
+				location.reload();
+				// console.log(1)
+				// this.initCanteen(this.Canteen).then(() => {
+				// 	this.initCanteenComments2(this.Canteen, this.page);	
+				// })	
+			});
 		},
 		methods: {
-			
+			// 初始化食堂
+			initCanteen(canteen_id) {
+				let that = this;
+				var p = new Promise((resolve, reject) => {
+					$.get('http://localhost:3001/apis/getCanteenDetail', {
+						canteen_id: canteen_id
+					}).then(data => {
+						that.canteen = data[0];
+						resolve('success')
+					}).catch(err => {
+						console.log(err);
+						reject('fail')
+					})
+				})
+				return p;
+			},
+
+			// 初始化食堂评论
 			initCanteenComments2(canteen_id, page) {
 				let that = this;
 				$.get('http://localhost:3001/apis/getSomeCanteenComments', {
@@ -127,16 +137,42 @@
 				})
 			},
 
-			// view(ev) {
-			// 	let $target = $(ev.target);
-			// 	$(".imgs-view").hide();
-			// 	$target.parents('.imgs').next('.imgs-view').find('img').prop('src', $target.prop('src')).end().show();
-			// },
-
+			// 加载更多食堂评论
 			moreCanteenComments() {
 				this.page ++;
 				this.initCanteenComments2(this.Canteen, this.page);
-			}
+			},
+
+			// 查看食堂图片
+			view(ev) {
+				$("#mask").show();
+				$(".imgs-box").slideDown(400);
+				// $(".imgs-box .box-body img").prop('src', $(ev.target).prop('src'));
+				$(".imgs-box").css('backgroundImage', 'url('+ $(ev.target).prop('src') +')').data('currentimg', $(ev.target).index());
+				console.log($(".imgs-box").data('currentimg'));
+			},
+
+			close() {
+				$(".imgs-box").fadeOut();
+				$("#mask").hide();
+			},
+
+			 changeImg(type, event) {
+			 	let max = $(".canteen-imgs-item").length;
+			 	let current = $(".imgs-box").data('currentimg')
+			 	if (type=='prev' && current > 0) {
+			 		current--;
+			 		$(".imgs-box").data('currentimg', current)
+			 		console.log(current)
+			 		$(".imgs-box").css('backgroundImage', 'url('+ $(".canteen-imgs-item").eq(current).prop('src') +')')
+			 		;
+			 	} else if (type=='next' && current < max - 1) {
+			 		current++;
+			 		$(".imgs-box").data('currentimg', current)
+			 		console.log(current)
+			 		$(".imgs-box").css('backgroundImage', 'url('+ $(".canteen-imgs-item").eq(current).prop('src') +')')
+			 	}
+			 }
 		},
 		components: {
 			starCount,
@@ -175,5 +211,57 @@
 	}
 	.comment-text {
 		margin-top: 20px;
+	}
+	.canteen-imgs-show {
+		width: 400px;
+		height: 300px;
+	}
+	.canteen-imgs-item {
+		width: 80px;
+		height: 80px;
+		display: inline-block;
+	}
+	.imgs-box {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 800px;
+		height: 700px;
+		background-color: rgba(255,255,255,.8);
+		z-index: 10;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.box-head span{
+		float: right;
+		padding: 20px 20px 0;
+	}
+	.box-body img {
+		display: block;
+		width: 600px;
+		height: 600px;
+		margin: 40px auto;
+	}
+	.box-body span {
+		display: block;
+		position: absolute;
+		top: 45%;
+		width: 64px;
+		height: 64px;
+		cursor: pointer;
+	}
+	.box-body span:first-child {
+		background: url(../assets/leftArrow.png) no-repeat;
+		left: 0;
+	}
+	.box-body span:last-child {
+		background: url(../assets/rightArrow.png) no-repeat;
+		right: 0;
+	}
+	.canteen-imgs-item {
+		display: inline-block;
+		margin-top: 10px;
+		margin-right: 20px;
 	}
 </style>

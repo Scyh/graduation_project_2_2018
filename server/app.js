@@ -189,29 +189,29 @@ app.post('/apis/addNewCanteenComment', (req, res, next) => {
         console.log("*********::::" + req.body.comment_belongsTo)
     Canteen_Comments.fetchAllScore(req.body.comment_belongsTo)
       .then(data => {
-        console.log(data)
+        // console.log(data)
         for(let i in data) {
           allServiceScore += data[i].comment_service_score;
           allEnvironmentalScore += data[i].comment_environmental_score
         }
 
-        console.log('******************');
-        console.log('allServiceScore: ' + allServiceScore);
-        console.log('allEnvironmentalScore' + allEnvironmentalScore);
-        console.log('******************');
+        // console.log('******************');
+        // console.log('allServiceScore: ' + allServiceScore);
+        // console.log('allEnvironmentalScore' + allEnvironmentalScore);
+        // console.log('******************');
 
         Canteen_Comments.fetchAllCount(req.body.comment_belongsTo).then(data => {
           canteenCommentsCount = data * 1;
 
           newServiceScore = ((allServiceScore * 1) / canteenCommentsCount).toFixed(1);
           newEnvironmentalScore = ((allEnvironmentalScore) / canteenCommentsCount).toFixed(1);
-          newOverAllScore = ((newServiceScore * 1) + (newEnvironmentalScore * 1)) / 2;
+          newOverAllScore = (((newServiceScore * 1) + (newEnvironmentalScore * 1)) / 2).toFixed(1);
 
-          console.log('******************');
-          console.log('newServiceScore: ' + newServiceScore);
-          console.log('newEnvironmentalScore' + newEnvironmentalScore);
-          console.log('newOverAllScore: ' + newOverAllScore)
-          console.log('******************');
+          // console.log('******************');
+          // console.log('newServiceScore: ' + newServiceScore);
+          // console.log('newEnvironmentalScore' + newEnvironmentalScore);
+          // console.log('newOverAllScore: ' + newOverAllScore)
+          // console.log('******************');
 
           Canteen.updateScore({
             canteen_id: req.body.comment_belongsTo,
@@ -385,12 +385,50 @@ app.get('/apis/admin/getUserInfo', function(req, res, next) {
     })
 })
 
+// 获取食堂所有信息
 app.get('/apis/admin/getCanteen', function(req, res, next) {
   Canteen.find().then(data=> {
     console.log(data)
     res.json(data)
   }).catch(er => {
     console.log(err);
+  })
+})
+
+// 获取食堂照片
+app.get('/apis/admin/getCanteenImgs', (req, res, next) => {
+  Canteen.getCanteenImgs(req.query.canteen_id).then(data => {
+    console.log(data);
+    res.json(data)
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+// 更新食堂照片
+app.post('/apis/admin/updateCanteenImgs', (req, res, next) => {
+  Canteen.updateCanteenImgs({
+    canteen_id: req.body.canteen_id,
+    canteen_imgs: req.body.canteen_imgs
+  }).then(data => {
+    console.log(data)
+    if (data.n == 1 && data.ok == 1)
+    res.send({status: 'success'})
+  }).catch(err => {
+    console.log(err)
+    res.send({status: 'fail'})
+  })
+})
+
+// 删除食堂评论
+app.post('/apis/admin/delCanteenComment', (req, res, next) => {
+  Canteen_Comments.delOne(req.body.comment_id).then(data => {
+    if (data.n == 1 && data.ok == 1) {
+      res.send({status: 'success'})
+    }
+  }).catch(err => {
+    console.log(err);
+    res.send({status: 'fail'})
   })
 })
 

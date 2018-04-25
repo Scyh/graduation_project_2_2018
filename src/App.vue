@@ -2,6 +2,7 @@
   <div id="app">
     <cus-nav v-if="!isAdmin"></cus-nav>
     <cus-main></cus-main>
+    <div id="mask"></div>
   </div>
 </template>
 
@@ -32,6 +33,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   user-select: none;  /* 禁止选择 */
+  overflow: hidden;
+  position: relative;
 }
 a {
   color: #000;
@@ -71,11 +74,22 @@ ul {
     padding: 30px 0;
     cursor: pointer;
   }
-  .more span.hasMore::after {
-    content: url(./assets/more.png);
-    display: inline-block;
-    position: absolute;
-    top: 32px;
-    right: 60px;
-  }
+.more span.hasMore::after {
+  content: url(./assets/more.png);
+  display: inline-block;
+  position: absolute;
+  top: 32px;
+  right: 60px;
+}
+
+#mask {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(40, 40, 40,.8);
+  z-index: 9;
+} 
 </style>

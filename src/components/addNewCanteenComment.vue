@@ -22,6 +22,7 @@
 <script>
 	import starCount from './star_count.vue'
 	import { mapGetters } from 'vuex'
+	import bus from '../bus.js'
 
 	export default {
 		props: ['belongsTo'],
@@ -50,7 +51,8 @@
 					})
 						.then(data => {
 							console.log(data)
-							alert("评论成功！")
+							alert("评论成功！");
+							bus.$emit('init')
 							that.reset();
 						}).catch(err => {
 							console.log(err)

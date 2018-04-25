@@ -6,9 +6,10 @@ var schema_Canteen_Comments = new mongoose.Schema({
 		type: String,
 		require: true
 	},
-	commment_time: {
+	comment_time: {
 		type: Number,
-		require: true
+		require: true,
+		default: new Date().valueOf()
 	},
 	comment_text: {
 		type: String,
@@ -33,6 +34,7 @@ schema_Canteen_Comments.statics = {
 	// 通过所属食堂id查找
 	findByCanteen_id(params, data) {
 		return this.find({'comment_belongsTo': params.belongsTo})
+					.sort({'comment_time': -1})
 					.limit(params.commentsCount * 1)
 					.skip((params.page - 1 ) * params.commentsCount)
 					.exec(data)
@@ -49,6 +51,10 @@ schema_Canteen_Comments.statics = {
 	fetchAllCount(comment_belongsTo, data) {
 		return this.find({'comment_belongsTo': comment_belongsTo}).count().exec(data)
 	},
+
+	delOne(comment_id, data) {
+		return this.remove({"_id": comment_id}).exec(data)
+	}
 }
 
 module.exports = schema_Canteen_Comments
