@@ -14,7 +14,7 @@
 			
 		</div>
 		<div class="updata-foot">
-			<upload></upload>
+			<upload :uploadCount="10"></upload>
 			<hr>
 			<button class="btn btn-primary" @click="confirm">确认修改</button>
 		</div>

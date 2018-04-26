@@ -33,7 +33,8 @@ var schema_Food = new mongoose.Schema({
 		require: true
 	},
 	food_cover_img: {
-		type: String
+		type: String,
+		default: ''
 	}
 })
 
@@ -78,6 +79,31 @@ schema_Food.statics = {
 			'food_star': ranking
 		}).limit(6).skip((params.page - 1) * 6).exec(data)
 	},
+
+	// 获取每个食堂的菜品总量
+	getFoodCount(canteen_id, data) {
+		return this.find({'food_belongsTo': canteen_id}).count().exec(data)
+	},
+
+	// 删除菜品
+	delOne(food_id, data) {
+		return this.remove({'_id': food_id}).exec(data)
+	},
+
+	// 修改菜品信息
+	changeFoodInfo(params, data) {
+		return this.update({'_id': params.food_id}, {
+			$set: {
+				'food_name': params.food_name,
+				'food_brief': params.food_brief,
+				'food_price': params.food_price,
+				'food_tel': params.food_tel,
+				'open_time': params.open_time,
+				'food_addr': params.food_addr,
+				'food_cover_img': params.food_cover_img
+			}
+		}).exec(data)
+	}
 
 }
 

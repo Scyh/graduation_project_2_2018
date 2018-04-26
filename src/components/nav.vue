@@ -42,26 +42,29 @@
 				</template>
 				<template v-else>
 					<ul class="nav navbar-right nav-form col-xs-4 col-sm-2 col-md-2 col-lg-2">
-						<li>当前用户：{{ username }}</li>
+						<li title="点我换头像" data-toggle="modal" data-target="#changeProfile">当前用户：{{ username }}</li>
 						<li><a class="btn-logOut" @click="logOut" href="javascript:void(0);">退出</a></li>
 					</ul>
 				</template>
 			</div>
 		</div>
 		
-		<login id="loginModal"></login>
+		<login id="loginModal" v-on:userProfile="saveUserProfile"></login>
 		<register id="registerModal"></register>
+		<change-profile :userProfile="userProfile"></change-profile>
 	</nav>
 </template>
 <script>
 	import login from './login.vue'
+	import changeProfile from './changeUserProfile.vue'
 	import register from './register.vue'
 	import { mapGetters } from 'vuex'
 
 	export default {
 		data() {
 			return {
-				username: ''
+				username: '',
+				userProfile: ''
 			}
 		},
 		mounted() {
@@ -90,10 +93,17 @@
 				this.$store.dispatch('logOut');
 				// location.reload();
 			},
+
+			// 保存用户头像
+			saveUserProfile(data) {
+				this.username = data[0].username;
+				this.userProfile = data[0].userProfile;
+			}
 		},
 		components: {
 			login,
-			register
+			register,
+			changeProfile
 		}
 	}
 </script>

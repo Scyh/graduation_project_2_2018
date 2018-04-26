@@ -59,7 +59,7 @@
 						<button class="btn btn-primary" @click="reply">发表回复</button>
 					</div>
 					<div class="col-lg-12">
-						<upload></upload>
+						<upload :uploadCount="3"></upload>
 					</div>
 				</div>
 			</template>
@@ -230,6 +230,7 @@
 						}).then(data => {
 							console.log(data);
 							alert("评论成功~");
+							this.initFoodComments(this.food_id, this.comments_page)
 						}).catch(err => {
 							alert("评论失败...");
 							console.log(err)

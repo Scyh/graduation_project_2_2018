@@ -21,18 +21,13 @@
 					<dl>
 						<dt @click="fn($event),translateIndex($event)" data-index='0' title="foodManage" id="foodManage"><span class="glyphicon glyphicon-list"></span>食堂菜品管理</dt>
 						<dd @click="fn($event),translateIndex($event)" data-index='1' title="foodManage">食堂菜品添加</dd>
-						<!-- <dd @click="fn($event)" title="questionManage"></dd> -->
 					</dl>
 					<dl>
-						<dt @click="fn($event)" title="announcement" id="announcement"><span class="glyphicon glyphicon-bullhorn"></span>公告管理</dt>
-						<!-- <dd @click="fn($event),announcement('')">公告管理</dd> -->
-						<dd @click="fn($event)" title="announcement">发布公告</dd>
+						<dt @click="fn($event),translateIndex($event)" title="announcementManage" data-index='0' id="announcementManage"><span class="glyphicon glyphicon-bullhorn"></span>公告管理</dt>
+						<dd @click="fn($event),translateIndex($event)" title="announcementManage" data-index='1'>发布公告</dd>
 					</dl>
 					<dl>
 						<dt @click="fn($event)" title="message" id="message"><span class="glyphicon glyphicon-tags"></span>留言</dt>
-					</dl>
-					<dl>
-						<dt @click="fn($event)" title="tipOff" id="tipOff"><span class=" glyphicon glyphicon-info-sign"></span>举报</dt>
 					</dl>
 				</div>
 				<div class="col-md-10 menu-right">
@@ -43,6 +38,7 @@
 					<admin-user-manage v-if="currentContent == 'userManage'"></admin-user-manage>
 					<admin-canteen-manage v-if="currentContent == 'canteenManage'"></admin-canteen-manage>
 					<admin-food-manage v-if="currentContent == 'foodManage'"></admin-food-manage>
+					<admin-announcement-manage v-if="currentContent == 'announcementManage'"></admin-announcement-manage>
 				</div>
 			</div>
 			</div>
@@ -53,6 +49,7 @@
 	import adminUserManage from './admin_user_manage.vue'
 	import adminCanteenManage from './admin_canteen_manage.vue'
 	import adminFoodManage from './admin_food_manage.vue'
+	import adminAnnouncementManage from './admin_announcement_manage.vue'
 	import bus from '../bus.js'
 
 	export default {
@@ -94,6 +91,7 @@
 			adminUserManage,
 			adminCanteenManage,
 			adminFoodManage,
+			adminAnnouncementManage
 		}
 	}
 </script>

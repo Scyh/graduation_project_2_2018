@@ -2,7 +2,7 @@
 	<div id="upload">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-2">
+				<div class="col-lg-3">
 					<div class="upload-wrap" title="上传图片">
 						<input type="file" multiple class="upload" @change="upload">
 						<div class="upload-face">
@@ -23,6 +23,7 @@
 <script>
 
 	export default {
+		props: ['uploadCount'],
 		data() {
 			return {
 				hasUpload: 0
@@ -37,8 +38,8 @@
 				let exist = $(".preView").length;	// 已经上传的文件
 				let arr = [];
 
-				if ((length + exist) > 3) {
-					alert("最多只能上传三张图片");
+				if ((length + exist) > (this.uploadCount * 1)) {
+					alert("最多只能上传" + this.uploadCount + "张图片");
 				} else {
 					for(let i = 0; i < length; i++) {
 						let reader = new FileReader();	// 新建FileReader对象	

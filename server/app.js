@@ -13,7 +13,8 @@ var mongoose = require('./db.js'),
   Canteen = require('./models/canteen.js'),
   Canteen_Comments = require('./models/canteen_comments.js'),
   Food_Comments = require('./models/food_comments.js'),
-  News = require('./models/news.js');
+  News = require('./models/news.js'),
+  Announcement = require('./models/announcement.js');
 
 var app = express();
 
@@ -89,6 +90,14 @@ app.get('/apis/uniqueUserName', function(req, res, next) {
   })
 })
 
+app.get('/apis/getUserProfile', (req, res, next) => {
+  User.getProfile(req.query.username).then(data => {
+    res.json(data)
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
 // 验证用户接口
 app.get('/apis/checkUser', function(req, res, next) {
   User.checkUser({
@@ -110,6 +119,19 @@ app.get('/apis/checkUser', function(req, res, next) {
     console.log("err: " + err)
   })
 });
+
+// 用户修改头像
+app.post('/apis/updateUserProfile', (req, res, next) => {
+  User.updateProfile({
+    username: req.body.username,
+    userProfile: req.body.srcStr
+  }).then(data => {
+    console.log(data)
+    res.send({status: 'success'})
+  }).catch(err => {
+    res.send({status: 'fail'})
+  })
+})
 
 // 获取 food 列表
 app.get('/apis/getFoods', (req, res, next) => {
@@ -362,6 +384,26 @@ app.get('/apis/getOneNew', (req, res, next) => {
   })
 })
 
+// 查找公告
+app.get('/apis/getAnnouncements', (req, res, next) => {
+  Announcement.getAnnouncements({
+    count: req.query.count,
+    page: req.query.page
+  }).then(data => {
+    res.json(data);
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+// 查看一个公告
+app.get('/apis/getOntAnnouncement', (req, res, next) => {
+  Announcement.findById(req.query.id).then(data =>{
+    res.json(data)
+  }).catch(err => {
+    console.log(err)
+  })
+})
 
 /*
 *管
@@ -428,6 +470,103 @@ app.post('/apis/admin/delCanteenComment', (req, res, next) => {
     }
   }).catch(err => {
     console.log(err);
+    res.send({status: 'fail'})
+  })
+})
+
+// 获取食堂所属菜品的数量
+app.get('/apis/admin/getFoodCount', (req, res, next) => {
+  Food.getFoodCount(req.query.canteen_id).then(data => {
+    res.send({
+      status: 'success',
+      count: data
+    })
+  }).catch(err => {
+    console.log(err)
+    res.send({status: 'fail'})
+  })
+})
+
+// 删除菜品
+app.post('/apis/admin/delOneFood', (req, res, next) => {
+  Food.delOne(req.body.food_id).then(data => {
+    console.log(data)
+    if (data.n == 1 && data.ok ==1) {
+      res.send({status: 'success'})
+    } else {
+      res.send({status: 'fail'})
+    }
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+// 添加菜品
+app.post('/apis/admin/addNewFood', (req, res, next) => {
+  let body = req.body;
+  let newFood = new Food({
+    food_name: body.food_name,
+    food_brief: body.food_brief,
+    food_price: body.food_price,
+    food_tel: body.food_tel,
+    open_time: body.open_time,
+    food_addr: body.food_addr,
+    food_belongsTo: body.food_belongsTo,
+    food_cover_img: body.food_cover_img == undefined ? '' : body.food_cover_img
+  })
+
+  newFood.save().then(data => {
+    console.log(data)
+    res.send({status: 'success'})
+  }).catch(err => {
+    console.log(err)
+    res.send({status: 'fail'})
+  })
+})
+
+// 修改菜品信息
+app.post('/apis/admin/changeFoodInfo', (req, res, next) => {
+  let body = req.body;
+  Food.changeFoodInfo({
+    food_id: body.food_id,
+    food_name: body.food_name,
+    food_brief: body.food_brief,
+    food_price: body.food_price,
+    food_tel: body.food_tel,
+    open_time: body.open_time,
+    food_addr: body.food_addr,
+    food_cover_img: body.food_cover_img
+  }).then(data => {
+    console.log(data)
+    res.send({status: 'success'})
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+// 删除公告
+app.post('/apis/admin/delAnnouncement', (req, res, next) =>{
+  Announcement.delOne(req.body.id).then(data => {
+    console.log(data)
+    res.send({status: 'success'})
+  }).catch(err => {
+    res.send({status: 'fail'})
+    console.log(err)
+  })
+})
+
+// 发表新公告
+app.post('/apis/admin/publishAnnouncement', (req, res, next) => {
+  let body = req.body;
+  let newAnnouncement = new Announcement({
+    announcement_title: body.title,
+    announcement_content: body.content
+  });
+
+  newAnnouncement.save().then(data => {
+    console.log(data)
+    res.send({status: 'success'})
+  }).catch(err => {
     res.send({status: 'fail'})
   })
 })

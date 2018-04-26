@@ -11,10 +11,6 @@ var schema_User = new mongoose.Schema({
 		type: String,
 		require: true
 	},
-	// trueName: {
-	// 	type: String,
-	// 	default: ''
-	// },
 	userProfile: {
 		type: String,
 		default: ''
@@ -37,6 +33,22 @@ schema_User.statics = {
 			'username': params.username,
 			'password': params.password
 		}).exec(data);
+	},
+
+	// 获取用户头像
+	getProfile(username, data) {
+		return this.find({'username': username}, {
+			'userProfile': 1
+		}).exec(data)
+	},
+
+	// 更新用户头像
+	updateProfile(params, data) {
+		return this.update({'username': params.username}, {
+			$set: {
+				'userProfile': params.userProfile
+			}
+		}).exec(data)
 	},
 
 	// 管理员获取用户信息

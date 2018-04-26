@@ -94,7 +94,7 @@
 
 				<div class="col-lg-4 col-md-4 col-sm-4 hotNews">
 					<div class="hotNews-head">
-						<h5><span class='glyphicon glyphicon-chevron-down'></span>相关推荐</h5>
+						<h5><span class='glyphicon glyphicon-chevron-down'></span>最新公告</h5>
 					</div>
 					<div class="hotNews-body recommend">
 						<div class="recommend-item">
@@ -185,12 +185,13 @@
 	.hotNews-head h5 {
 		font-weight: 600;
 		padding-left: 30px;
+		padding-top: 10px;
 		position: relative;
 	}
 	.hotNews-head h5 span {
 		position: absolute;
 		left: 13px;
-		top: 0px;
+		top: 10px;
 	}
 	.hotNews-body {
 		height: 280px;

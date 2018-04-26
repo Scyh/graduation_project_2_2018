@@ -8,7 +8,9 @@ import store from './store/index.js'
 
 import './assets/css/bootstrap.min.css'
 import './assets/css/normalize.css'
+import './assets/css/cropper.min.css'
 import './assets/js/bootstrap.min'
+
 import './filter.js'
 
 Vue.prototype.$http = axios

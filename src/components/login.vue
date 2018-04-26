@@ -50,7 +50,6 @@
 				let that = this;
 				let username = $(".username").val();
 				let password = $(".password").val();
-
 				if (username != '' && password != '') {
 					$.ajax({
 					url: 'http://localhost:3001/apis/checkUser',
@@ -62,7 +61,6 @@
 				})
 				.done(function(data) {
 					if (data.status == 'success') {
-						
 						// 验证成功，用户存在
 						console.log(username)
 						// 跳转管理员界面
@@ -74,12 +72,12 @@
 							$(".close").trigger('click');
 							// location.reload();
 						} else {
-
 							// 普通用户登录
 							sessionStorage.username = username;
 							that.$store.dispatch("logIn");
 							$(".close").trigger('click');
-							location.reload();
+							that.$emit('userProfile', data.userData)
+							// location.reload();
 						}
 
 					} else if (data.status == 'fail') {
