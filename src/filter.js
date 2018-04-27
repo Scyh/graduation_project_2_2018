@@ -1,5 +1,6 @@
 import Vue from 'vue'
 
+// 转换食堂id
 Vue.filter('switchCanteen', function(val) {
 	switch(val) {
 		case 1001:
@@ -19,6 +20,35 @@ Vue.filter('switchCanteen', function(val) {
 	}
 });
 
+//转换文章分类
+Vue.filter('switchNews', val => {
+	switch(val) {
+		case 'news':
+			return '新闻'
+			break;
+		case 'hotNews':
+			return '热门资讯'
+			break;
+		default: 
+			return '新闻'
+	}
+})
+
+// 转换留言消息状态
+Vue.filter('switchMsgStatusType', function(value) {
+	switch(value) {
+		case 'notRead':
+			return "未读";
+			break;
+		case 'hasRead':
+			return "已读";
+			break
+		default:
+			return "未读"
+	}
+})
+
+// 转换并统一日期格式
 Vue.filter('getDate', function(value) {
 	if (!value) {
 		return

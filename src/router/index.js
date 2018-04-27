@@ -10,7 +10,9 @@ import ranking from '../components/ranking.vue'
 import messageBoard from '../components/messageBoard.vue'
 import newsDetail from '../components/food-news-detail.vue'
 import admin from '../components/admin.vue'
+import announcement from '../components/announcement_detail.vue'
 import store from '../store/index'
+
 
 Vue.use(Router)
 
@@ -33,6 +35,11 @@ const router =  new Router({
       path: '/news/:id',
       name: 'newsDetail',
       component: newsDetail
+    },
+    {
+      path: '/announcement/:id',
+      component: announcement,
+      name: 'announcement'
     },
     {
       path: '/canteen/:location/:id',

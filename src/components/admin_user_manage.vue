@@ -4,14 +4,12 @@
 			<thead>
 				<tr>
 					<td>Page：{{currentPage}}</td>
-					<td><input type="text" id="search" placeholder="输入用户名查找" @keyup.enter="searchUser($event)"></td>
 				</tr>
 				<tr>
 					<th>#</th>
 					<th>头像</th>
 					<th>用户名</th>
-					<th title="禁言用户不能发帖、评论、回复">用户权限(1-正常/0-禁言)</th>
-					<th>操作 <span title="刷新" class="glyphicon glyphicon-refresh refresh" @click="init(currentPage)"></span></th>
+					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,40 +21,25 @@
 				    		<img v-else src="../assets/index.png" />
 						</td>
 						<td id="username">{{ item.username }}</td>
-						<td>{{ item.permission }}</td>
-						<td>
-							<button class='btn btn-info' data-toggle="modal" data-target="#user_detail_info" @click="transfer($event)">查看</button>
-							<button  v-if="item.permission == 1" class="btn btn-warning" @click="forbid($event)">更改权限</button>
-							<button v-else class="btn" @click="forbid($event)">恢复权限</button>
-							<button class='btn btn-danger' :data-id="item._id" @click="confirm($event)">删除</button>
-							
+						<td><button class='btn btn-danger' :data-id="item._id" @click="deleteUser($event)">删除</button>
 						</td>
 					</tr>
 				</template>
 			</tbody>
 		</table>
 
-		<nav v-show="navShow">
+		<nav>
 			<ul class="pagination">
-				<li>
-				    <a href="javascript:void(0)"  @click="init(1)" title="首页">
-			        <span class="glyphicon glyphicon-backward"></span>
-			    	</a>
-			    </li>
 			    <li>
 				    <a href="javascript:void(0)"  @click="change('prev')" title="前一页">
 			        <span class="glyphicon glyphicon-chevron-left"></span>
 			    	</a>
 			    </li>
+			    <li><span>第{{ currentPage }}/{{ maxPage }}页</span></li>
 			    <li>
 				    <a href="javascript:void(0)" @click="change('next')" title="后一页">
 			        <span class="glyphicon glyphicon-chevron-right"></span>
 			      </a>
-			    </li>
-			    <li>
-				    <a href="javascript:void(0)"  @click="init(maxPage)" title="尾页">
-			        <span class="glyphicon glyphicon-forward"></span>
-			    	</a>
 			    </li>
 		    </ul>
 		</nav>	<!-- 切换分页 end -->
@@ -77,23 +60,16 @@
 	</div>
 </template>
 <script>
-	// import bus from '../bus.js'
+	import bus from '../bus.js'
 
 	export default {
 		data() {
 			return {
 				user:[],
-				checkUserName: '',
 				count: 0,
 				currentPage: 1,
-				navShow: true,
+				maxPage: 1,
 			}
-		},
-		computed: {
-			maxPage() {
-				return Math.ceil(this.count / 6)
-			},
-
 		},
 		mounted() {
 			sessionStorage.userPage = 1;
@@ -105,9 +81,7 @@
 			init(page) {
 				let that = this;
 				that.user = [];
-				sessionStorage.userPage = page;
 				this.currentPage = page;
-				that.navShow = true;
 				$.get('http://localhost:3001/apis/admin/getUserInfo', {
 					page: page
 				}, function(data) {
@@ -118,7 +92,7 @@
 							that.user.push(item);
 						}
 					})
-					that.count = data.count;
+					that.maxPage = Math.ceil(data.count / 6);
 				});
 			},	// init end
 
@@ -128,24 +102,17 @@
 			},
 
 			change(type) {
-				if (type == 'prev') {
-					if (sessionStorage.userPage > 1) {
-						this.currentPage = sessionStorage.userPage --;
-						this.init(sessionStorage.userPage);
-					}
-				} 
-
-				if (type == 'next') {
-					if (sessionStorage.userPage < this.maxPage) {
-						this.currentPage = sessionStorage.userPage ++;
-						this.init(sessionStorage.userPage);		
-					}
+				if (type == 'prev' && this.currentPage > 1) {
+					this.currentPage--;
+				} else if (type == 'next' && this.currentPage < this.maxPage) {
+					this.currentPage++;
 				}
+				this.init(this.currentPage);
 			},	// change end
 			
 			deleteUser(event) {
 				let that = this;
-				$.post('http://localhost:3000/api/admin/deleteUser', {
+				$.post('http://localhost:3001/apis/admin/deleteUser', {
 					id: $(event.target).data().id
 				}, function(data, textStatus, xhr) {
 					if (data.status == 'success') {
@@ -154,29 +121,7 @@
 						that.init(that.currentPage)
 					}
 				});
-			},	// deleteUser end
-
-			searchUser(event) {
-				let that = this;
-				if ($(event.target).val() == '') {
-					return 
-				} else {
-					$.post('http://localhost:3000/api/admin/searchUser', {
-						username: $(event.target).val().trim()
-					}, function(data) {
-						console.log(data.length)
-						if (data.length > 0) {
-							that.user = [];
-							that.user = data;
-							that.navShow = false;
-						} else {
-							alert("未搜索到");
-							that.navShow = true;
-						}
-					});
-					$(event.target).val("")
-				}
-			}				
+			},	// deleteUser end			
 		},
 		components: {
 		}

@@ -38,7 +38,7 @@ schema_User.statics = {
 	// 获取用户头像
 	getProfile(username, data) {
 		return this.find({'username': username}, {
-			'userProfile': 1
+			'userProfile': 1,
 		}).exec(data)
 	},
 
@@ -54,6 +54,11 @@ schema_User.statics = {
 	// 管理员获取用户信息
 	adminFetchSome(index, data) {
 		return this.find({}).limit(6).skip((index - 1) * 6).exec(data)
+	},
+
+	// 删除用户
+	deleteUser(id, data) {
+		return this.remove({"_id": id}).exec(data)
 	},
 }
 

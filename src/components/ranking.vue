@@ -90,14 +90,11 @@
 			// 改变排序顺序
 			changeRanking(ev) {
 				let flag = this.ranking == 'asc';
-				// if (flag) {
 					flag ? $(".showRanging span").removeClass('glyphicon-arrow-up').addClass('glyphicon-arrow-down') : $(".showRanging span").removeClass('glyphicon-arrow-down').addClass('glyphicon-arrow-up')
-				// } 
 				flag ? this.ranking = 'desc' : this.ranking = 'asc';
 				this.foods = [];
 				this.rankingPage = 1;
 				this.initRanking(this.ranking, this.rankingPage);
-
 			}
 		},
 	}
@@ -119,5 +116,8 @@
 	td img {
 		width: 70px;
 		border-radius: 50%;
+	}
+	.showRanging {
+		cursor: pointer;
 	}
 </style>

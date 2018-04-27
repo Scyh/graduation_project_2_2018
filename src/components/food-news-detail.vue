@@ -12,7 +12,7 @@
 							<span>{{ newsDetail.news_publish_time | getDate}}</span>
 						</div>
 						<div class="news-content">
-							<p>{{ newsDetail.news_text }}</p>
+							<p v-html="newsDetail.news_text"></p>
 						</div>
 					</article>
 				</div>
@@ -47,7 +47,17 @@
 					that.newsDetail = data;
 				})
 			}
-		}
+		},
+		beforeDestroy() {
+			let that = this;
+			if (that.newsDetail.news_category == 'hotNews') {
+				$.post('http://localhost:3001/apis/admin/updateNewsPv', {
+					id: that.newsDetail._id
+				}).then(data => {
+					console.log('更新pv')
+				})
+			}
+		},
 
 	}
 </script>

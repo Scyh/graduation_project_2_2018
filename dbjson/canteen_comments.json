@@ -333,6 +333,7 @@
     "_id" : ObjectId("5acef626fcfd101b6459a899"),
     "comment_belongsTo" : 1000,
     "comment_service_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_environmental_score" : 3,
     "comment_author" : "zhang",
     "comment_text" : "还行还行还行还行还行",
@@ -344,6 +345,7 @@
     "_id" : ObjectId("5acef6b40074a921942b28ee"),
     "comment_belongsTo" : 1000,
     "comment_service_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_environmental_score" : 4,
     "comment_author" : "shen",
     "comment_text" : "服务还行，卫生一般，就酱啦",
@@ -356,6 +358,7 @@
     "comment_belongsTo" : 1000,
     "comment_service_score" : 5,
     "comment_environmental_score" : 5,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "很好",
     "__v" : 0
@@ -367,6 +370,7 @@
     "comment_belongsTo" : 1000,
     "comment_service_score" : 4,
     "comment_environmental_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "额",
     "__v" : 0
@@ -377,6 +381,7 @@
     "_id" : ObjectId("5acefd857a023a21d8a706eb"),
     "comment_belongsTo" : 1000,
     "comment_service_score" : 3,
+    "comment_time" : NumberLong(1523345734878),
     "comment_environmental_score" : 3,
     "comment_author" : "shen",
     "comment_text" : "asdasd",
@@ -389,6 +394,7 @@
     "comment_belongsTo" : 1000,
     "comment_service_score" : 3,
     "comment_environmental_score" : 3,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "qweqw",
     "__v" : 0
@@ -400,6 +406,7 @@
     "comment_belongsTo" : 1000,
     "comment_service_score" : 5,
     "comment_environmental_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "aaa",
     "__v" : 0
@@ -410,6 +417,7 @@
     "_id" : ObjectId("5acefeb0e2725322305f1cb2"),
     "comment_belongsTo" : 1001,
     "comment_service_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_environmental_score" : 4,
     "comment_author" : "shen",
     "comment_text" : "asdasd",
@@ -422,6 +430,7 @@
     "comment_belongsTo" : 1001,
     "comment_service_score" : 5,
     "comment_environmental_score" : 5,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "我觉得挺好",
     "__v" : 0
@@ -433,6 +442,7 @@
     "comment_belongsTo" : 1001,
     "comment_service_score" : 5,
     "comment_environmental_score" : 5,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "挺好的",
     "__v" : 0
@@ -444,6 +454,7 @@
     "comment_belongsTo" : 1001,
     "comment_service_score" : 5,
     "comment_environmental_score" : 5,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "me too",
     "__v" : 0
@@ -455,6 +466,7 @@
     "comment_belongsTo" : 1001,
     "comment_service_score" : 4,
     "comment_environmental_score" : 3,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "啊啊啊啊",
     "__v" : 0
@@ -466,6 +478,7 @@
     "comment_belongsTo" : 1004,
     "comment_service_score" : 5,
     "comment_environmental_score" : 4,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "还行",
     "__v" : 0
@@ -477,7 +490,20 @@
     "comment_belongsTo" : 1004,
     "comment_service_score" : 4,
     "comment_environmental_score" : 3,
+    "comment_time" : NumberLong(1523345734878),
     "comment_author" : "shen",
     "comment_text" : "啊",
+    "__v" : 0
+}
+
+/* 45 */
+{
+    "_id" : ObjectId("5ae048c05015751eb806d3c4"),
+    "comment_time" : 1524648128088.0,
+    "comment_belongsTo" : 1001,
+    "comment_service_score" : 4,
+    "comment_environmental_score" : 4,
+    "comment_author" : "shen",
+    "comment_text" : "还行吧，四分不能再多了",
     "__v" : 0
 }

@@ -23,6 +23,10 @@
 						<dd @click="fn($event),translateIndex($event)" data-index='1' title="foodManage">食堂菜品添加</dd>
 					</dl>
 					<dl>
+						<dt @click="fn($event),translateIndex($event)" title="newsManage" data-index='0' id="newsManage"><span class="glyphicon glyphicon-object-align-bottom"></span>文章管理</dt>
+						<dd @click="fn($event),translateIndex($event)" title="newsManage" data-index='1'>发布文章</dd>
+					</dl>
+					<dl>
 						<dt @click="fn($event),translateIndex($event)" title="announcementManage" data-index='0' id="announcementManage"><span class="glyphicon glyphicon-bullhorn"></span>公告管理</dt>
 						<dd @click="fn($event),translateIndex($event)" title="announcementManage" data-index='1'>发布公告</dd>
 					</dl>
@@ -39,6 +43,8 @@
 					<admin-canteen-manage v-if="currentContent == 'canteenManage'"></admin-canteen-manage>
 					<admin-food-manage v-if="currentContent == 'foodManage'"></admin-food-manage>
 					<admin-announcement-manage v-if="currentContent == 'announcementManage'"></admin-announcement-manage>
+					<admin-news-manage v-if="currentContent == 'newsManage'"></admin-news-manage>
+					<admin-message-manage v-if="currentContent == 'message'"></admin-message-manage>
 				</div>
 			</div>
 			</div>
@@ -50,6 +56,8 @@
 	import adminCanteenManage from './admin_canteen_manage.vue'
 	import adminFoodManage from './admin_food_manage.vue'
 	import adminAnnouncementManage from './admin_announcement_manage.vue'
+	import adminNewsManage from './admin_news_manage.vue'
+	import adminMessageManage from './admin_message_manage.vue'
 	import bus from '../bus.js'
 
 	export default {
@@ -91,7 +99,9 @@
 			adminUserManage,
 			adminCanteenManage,
 			adminFoodManage,
-			adminAnnouncementManage
+			adminAnnouncementManage,
+			adminNewsManage,
+			adminMessageManage
 		}
 	}
 </script>
